@@ -54,13 +54,13 @@ public class FilmeDetalhes {
     @SerializedName("Metascore")
     public int metascore;
 
-    @SerializedName("ImdbRating")
+    @SerializedName("imdbRating")
     public Double imdbRating;
 
-    @SerializedName("ImdbVotes")
+    @SerializedName("imdbVotes")
     public String imdbVotes;
 
-    @SerializedName("ImdbID")
+    @SerializedName("imdbID")
     public String imdbID;
 
     @SerializedName("Type")

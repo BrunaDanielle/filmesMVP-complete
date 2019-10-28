@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.filmesmvp.R;
 import com.example.filmesmvp.filmesmvp.data.FilmeServiceImpl;
 import com.example.filmesmvp.filmesmvp.data.model.Filme;
+import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -102,8 +103,8 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
     }
 
     @Override
-    public void exibirDetalhesUI(String filmeId) {
-        Toast.makeText(getContext(), filmeId, Toast.LENGTH_LONG).show();
+    public void exibirDetalhesUI(FilmeDetalhes filme) {
+        Toast.makeText(getContext(), filme.actors, Toast.LENGTH_LONG).show();
     }
 
     ItemListener mItemListener = new ItemListener(){
@@ -183,7 +184,6 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
                 int position = getAdapterPosition();
                 Filme filme = getItem(position);
                 mItemListener.onFilmeClick(filme);
-
             }
         }
     }

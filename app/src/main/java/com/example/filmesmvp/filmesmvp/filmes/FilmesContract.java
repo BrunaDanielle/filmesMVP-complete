@@ -1,6 +1,7 @@
 package com.example.filmesmvp.filmesmvp.filmes;
 
 import com.example.filmesmvp.filmesmvp.data.model.Filme;
+import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class FilmesContract {
     interface View{
         void setCarregando(boolean isAtivo);
         void exibirFilmes(List<Filme> filme);
-        void exibirDetalhesUI (String filmeId);
+        void exibirDetalhesUI (FilmeDetalhes filme);
     }
 
     interface UserActionsListener{

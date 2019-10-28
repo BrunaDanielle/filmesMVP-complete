@@ -2,12 +2,10 @@ package com.example.filmesmvp.filmesmvp.filmes;
 //irá implementar a classe contract para capturar interações do usuario, e terá API e Contract cm variaveis
 //locais para alimentar a view.
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.example.filmesmvp.filmesmvp.data.FilmeServiceAPI;
 import com.example.filmesmvp.filmesmvp.data.model.Filme;
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
+import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 
 public class FilmesPresenter implements FilmesContract.UserActionsListener {
     private final FilmeServiceAPI mApi;
@@ -32,12 +30,11 @@ public class FilmesPresenter implements FilmesContract.UserActionsListener {
     }
 
     @Override
-    public void abrirDetalhes(final Filme filme) {
-        Log.i("detelhes", filme.id);
-        mApi.getFilme(filme.id, new FilmeServiceAPI.FilmeServiceCallBack<Filme>(){
+    public void abrirDetalhes(Filme filme) {
+        mApi.getFilme(filme.id, new FilmeServiceAPI.FilmeServiceCallBack<FilmeDetalhes>(){
             @Override
-            public void onLoaded(Filme filme) {
-                mFilmesView.exibirDetalhesUI(filme.id);
+            public void onLoaded(FilmeDetalhes filme) {
+                mFilmesView.exibirDetalhesUI(filme);
             }
         });
     }

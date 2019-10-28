@@ -1,8 +1,8 @@
 package com.example.filmesmvp.filmesmvp.data;
 
 
-import com.example.filmesmvp.filmesmvp.data.model.Filme;
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
+import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,19 +31,19 @@ public class FilmeServiceImpl implements FilmeServiceAPI {
         });
     }
     @Override
-    public void getFilme(String filmeId, final FilmeServiceCallBack<Filme> callback) {
-      Call<Filme> callFilme = mRetrofit.buscaDetalhes(filmeId, "json");
-        callFilme.enqueue(new Callback<Filme>() {
+    public void getFilme(String filmeId, final FilmeServiceCallBack<FilmeDetalhes> callback) {
+      Call<FilmeDetalhes> callFilme = mRetrofit.buscaDetalhes(filmeId, "json");
+        callFilme.enqueue(new Callback<FilmeDetalhes>() {
             @Override
-            public void onResponse(Call<Filme> call, Response<Filme> response) {
+            public void onResponse(Call<FilmeDetalhes> call, Response<FilmeDetalhes> response) {
                 if(response.code() ==200){
-                    Filme filme = response.body();
+                    FilmeDetalhes filme = response.body();
                     callback.onLoaded(filme);
                 }
             }
 
             @Override
-            public void onFailure(Call<Filme> call, Throwable t) {
+            public void onFailure(Call<FilmeDetalhes> call, Throwable t) {
             } });
     }
 }
