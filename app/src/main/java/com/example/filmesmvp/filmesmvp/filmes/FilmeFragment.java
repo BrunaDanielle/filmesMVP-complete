@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -104,7 +103,11 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
     @Override
     public void exibirDetalhesUI(FilmeDetalhes filme) {
-        Toast.makeText(getContext(), filme.actors, Toast.LENGTH_LONG).show();
+        Intent i = new Intent(getActivity().getBaseContext(), FilmeDetalhesActivity.class);
+        i.putExtra("Actors", filme.actors);
+        i.putExtra("Title", filme.director);
+        i.putExtra("Ratings",filme.imdbRating);
+        getActivity().startActivity(i);
     }
 
     ItemListener mItemListener = new ItemListener(){
@@ -175,7 +178,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
                 super(itemView);
                 mItemListener = listener;
                 titulo = (TextView) itemView.findViewById(R.id.filme_titulo);
-                thumbnail = (ImageView) itemView.findViewById(R.id.filme_thumbnail);
+                thumbnail = (ImageView) itemView.findViewById(R.id.filme_thumb);
                 itemView.setOnClickListener(this);
             }
 

@@ -6,4 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".filmesmvp.filmes.FilmeDetalhesActivity">
 
+    <!--   <ImageView
+        android:id="@+id/filme_thumb"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /> -->
+
+    <TextView
+        android:id="@+id/nameActors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:text="Nome atores"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RatingBar
+        android:id="@+id/movie_rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:numStars="5"
+        app:layout_constraintEnd_toEndOf="@+id/nameMovie"
+        app:layout_constraintStart_toStartOf="@+id/nameMovie"
+        app:layout_constraintTop_toBottomOf="@+id/nameMovie" />
+
+    <TextView
+        android:id="@+id/nameMovie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:inputType="textMultiLine"
+        android:text="Nome Filme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameActors" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
