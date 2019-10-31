@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-   <!-- <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!-- <androidx.appcompat.widget.Toolbar
+         android:id="@+id/toolbar"
+         android:layout_width="0dp"
+         android:layout_height="?attr/actionBarSize"
+         android:background="@color/colorPrimary"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent">
 
-        <item
-            android:id="@+id/action_search"
-            android:icon="@android:drawable/ic_menu_search"
-            app:showAsAction="always|collapseActionView"
-            app:actionViewClass="androidx.appcompat.app.AppCompatActivity;"
-            android:title="Search"/>
+         <item
+             android:id="@+id/action_search"
+             android:icon="@android:drawable/ic_menu_search"
+             app:showAsAction="always|collapseActionView"
+             app:actionViewClass="androidx.appcompat.app.AppCompatActivity;"
+             android:title="Search"/>
 
-    </androidx.appcompat.widget.Toolbar>-->
+     </androidx.appcompat.widget.Toolbar>-->
 
 
     <FrameLayout
         android:id="@+id/content"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

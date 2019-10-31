@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +14,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -43,7 +49,8 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mListAdapter = new FilmesAdapter(new ArrayList<Filme>(0), mItemListener);
-        mActionsListener = new FilmesPresenter(new FilmeServiceImpl(), this);
+        mActionsListener = new FilmesPresenter(new FilmeServiceImpl(),this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -57,7 +64,10 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View root = inflater.inflate(R.layout.fragment_filme, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.filmes_list);
+        Toolbar mToolbar = root.findViewById(R.id.toolbar);
         recyclerView.setAdapter(mListAdapter);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
 
         int numColumns = 1;
 
@@ -116,6 +126,26 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
             mActionsListener.abrirDetalhes(filme);
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search, menu);
+        MenuItem mSearch = menu.findItem(R.id.action_search);
+        SearchView mSearchView = (SearchView) mSearch.getActionView();
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
 
     private static class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.ViewHolder> {
 
