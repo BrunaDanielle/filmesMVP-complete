@@ -34,7 +34,7 @@ import java.util.List;
 
 //exibe a lista de filmes com recycler view e cardview
 
-public class FilmeFragment extends Fragment implements FilmesContract.View {
+public class FilmeFragment extends Fragment implements FilmesContract.View, SearchView.OnQueryTextListener {
     private FilmesContract.UserActionsListener mActionsListener;
 
     private FilmesAdapter mListAdapter;
@@ -132,20 +132,29 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem mSearch = menu.findItem(R.id.action_search);
         SearchView mSearchView = (SearchView) mSearch.getActionView();
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        mSearchView.setQueryHint("Search");
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
         super.onCreateOptionsMenu(menu,inflater);
     }
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
 
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            if (mSearchView != null) {
+                searchView = (SearchView) searchItem.getActionView();
+                searchView.setOnSearchClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //perform your click operation here
+                    }
+                });
+                mActionsListener.carregarFilmes(newText);
+                return false;
+            }
+        }
 
     private static class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.ViewHolder> {
 
@@ -191,7 +200,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
         @Override
         public int getItemCount() {
-            return mFilmes.size();
+                return mFilmes.size();
         }
 
         public Filme getItem(int position) {

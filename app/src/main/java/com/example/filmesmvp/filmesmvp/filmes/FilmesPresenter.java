@@ -18,6 +18,19 @@ public class FilmesPresenter implements FilmesContract.UserActionsListener {
     }
 
     @Override
+    public void carregarFilmes(String nomeFilme) {
+        mFilmesView.setCarregando(true);
+
+        mApi.getFilmePesquisa(nomeFilme, new FilmeServiceAPI.FilmeServiceCallBack<FilmeResultadoBusca>() {
+            @Override
+            public void onLoaded(FilmeResultadoBusca resultadoBusca) {
+                mFilmesView.setCarregando(false);
+                mFilmesView.exibirFilmes(resultadoBusca.filmes);
+            }
+        });
+    }
+
+    @Override
     public void carregarFilmes() {
         mFilmesView.setCarregando(true);
 

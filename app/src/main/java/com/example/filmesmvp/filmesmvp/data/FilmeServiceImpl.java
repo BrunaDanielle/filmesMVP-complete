@@ -46,4 +46,19 @@ public class FilmeServiceImpl implements FilmeServiceAPI {
             public void onFailure(Call<FilmeDetalhes> call, Throwable t) {
             } });
     }
+
+    @Override
+    public void getFilmePesquisa(String nomeFilme, final FilmeServiceCallBack<FilmeResultadoBusca> callback) {
+        Call<FilmeResultadoBusca> callFilme = mRetrofit.busca(nomeFilme, "json");
+        callFilme.enqueue(new Callback<FilmeResultadoBusca>(){
+            public void onResponse(Call<FilmeResultadoBusca> call, Response<FilmeResultadoBusca> response){
+                if(response.code()==200){
+                    FilmeResultadoBusca resultadoBusca = response.body();
+                    callback.onLoaded(resultadoBusca);
+                }
+            }
+            public void onFailure(Call<FilmeResultadoBusca> call, Throwable t){
+            }
+        });
+    }
 }

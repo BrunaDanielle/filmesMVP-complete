@@ -15,6 +15,7 @@ public class FilmesContract {
     }
 
     interface UserActionsListener{
+        void carregarFilmes(String nomeFilme);
         void carregarFilmes();
         void abrirDetalhes(Filme filme);
     }
