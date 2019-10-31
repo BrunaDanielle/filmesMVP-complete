@@ -21,6 +21,9 @@ public class FilmesPresenter implements FilmesContract.UserActionsListener {
     public void carregarFilmes(String nomeFilme) {
         mFilmesView.setCarregando(true);
 
+        if(nomeFilme == null){
+            nomeFilme = "Star wars";
+        }
         mApi.getFilmePesquisa(nomeFilme, new FilmeServiceAPI.FilmeServiceCallBack<FilmeResultadoBusca>() {
             @Override
             public void onLoaded(FilmeResultadoBusca resultadoBusca) {

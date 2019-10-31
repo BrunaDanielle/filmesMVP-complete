@@ -10,22 +10,32 @@ import android.widget.TextView;
 
 import com.example.filmesmvp.R;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
+import com.squareup.picasso.Picasso;
 
 public class FilmeDetalhesActivity extends AppCompatActivity {
 
-    private ImageView imPoster;
-    private TextView titleMovie;
+    private ImageView poster;
+    private ImageView backdrop;
+    private TextView title;
+    private TextView releaseDate;
+    private TextView awards;
+    private TextView overview;
     private TextView nameActors;
-    private RatingBar ratings;
+    private RatingBar rating;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filme_detalhes);
 
-        imPoster = findViewById(R.id.filme_thumb);
-        titleMovie = findViewById(R.id.nameMovie);
-        nameActors = findViewById(R.id.nameActors);
-        ratings = findViewById(R.id.movie_rating);
+        backdrop = findViewById(R.id.filme_thumb);
+        poster = findViewById(R.id.movie_poster);
+        title = findViewById(R.id.movie_title);
+        nameActors = findViewById(R.id.actors);
+        awards = findViewById(R.id.awards);
+        rating = findViewById(R.id.movie_rating);
+        releaseDate = findViewById(R.id.movie_release_date);
+        overview = findViewById(R.id.movie_overview);
 
         Intent i = getIntent();
         Bundle extras = i.getExtras();
@@ -38,9 +48,23 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
     }
 
     private void populateDetails(Bundle extras) {
-        titleMovie.setText(extras.getString("Title"));
+
+        Picasso.with(this)
+                .load(extras.getString("Poster"))
+                .fit().centerCrop()
+                .into(poster);
+
+        Picasso.with(this)
+                .load(extras.getString("Poster"))
+                .fit().centerCrop()
+                .into(backdrop);
+
+        releaseDate.setText(extras.getString("DateRelease"));
+        overview.setText(extras.getString("Overview"));
+        title.setText(extras.getString("Title"));
+        awards.setText(extras.getString("Awards"));
         nameActors.setText(extras.getString("Actors"));
-        ratings.setRating(extras.getFloat("Ratings", 0f)/2);
+        rating.setRating(extras.getFloat("Ratings", 0f));
     }
 
 }

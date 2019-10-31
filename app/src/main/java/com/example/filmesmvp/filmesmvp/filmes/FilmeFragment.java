@@ -1,8 +1,10 @@
 package com.example.filmesmvp.filmesmvp.filmes;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,10 +37,13 @@ import java.util.List;
 
 //exibe a lista de filmes com recycler view e cardview
 
-public class FilmeFragment extends Fragment implements FilmesContract.View, SearchView.OnQueryTextListener {
+public class FilmeFragment extends Fragment implements FilmesContract.View {
     private FilmesContract.UserActionsListener mActionsListener;
 
     private FilmesAdapter mListAdapter;
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
+    private String querySearch;
 
     public FilmeFragment(){
     }
@@ -56,7 +62,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View, Sear
     @Override
     public void onResume() {
         super.onResume();
-        mActionsListener.carregarFilmes();
+         mActionsListener.carregarFilmes(querySearch);
     }
 
     @Nullable
@@ -115,8 +121,12 @@ public class FilmeFragment extends Fragment implements FilmesContract.View, Sear
     public void exibirDetalhesUI(FilmeDetalhes filme) {
         Intent i = new Intent(getActivity().getBaseContext(), FilmeDetalhesActivity.class);
         i.putExtra("Actors", filme.actors);
-        i.putExtra("Title", filme.director);
+        i.putExtra("Title", filme.title);
         i.putExtra("Ratings",filme.imdbRating);
+        i.putExtra("DateRelease",filme.released);
+        i.putExtra("Overview",filme.plot);
+        i.putExtra("Poster",filme.poster);
+        i.putExtra("Awards",filme.awards);
         getActivity().startActivity(i);
     }
 
@@ -130,31 +140,48 @@ public class FilmeFragment extends Fragment implements FilmesContract.View, Sear
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
-        MenuItem mSearch = menu.findItem(R.id.action_search);
-        SearchView mSearchView = (SearchView) mSearch.getActionView();
-        mSearchView.setQueryHint("Search");
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
-        super.onCreateOptionsMenu(menu,inflater);
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.i("onQueryTextChange", newText);
+
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.i("onQueryTextSubmit", query);
+                    querySearch = query;
+                    mActionsListener.carregarFilmes(query);
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
     }
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            if (mSearchView != null) {
-                searchView = (SearchView) searchItem.getActionView();
-                searchView.setOnSearchClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //perform your click operation here
-                    }
-                });
-                mActionsListener.carregarFilmes(newText);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                // Not implemented here
                 return false;
-            }
+            default:
+                break;
         }
+        searchView.setOnQueryTextListener(queryTextListener);
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private static class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.ViewHolder> {
 
@@ -226,7 +253,9 @@ public class FilmeFragment extends Fragment implements FilmesContract.View, Sear
                 int position = getAdapterPosition();
                 Filme filme = getItem(position);
                 mItemListener.onFilmeClick(filme);
+                Toast.makeText(v.getContext(),"click", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
     public interface ItemListener {
