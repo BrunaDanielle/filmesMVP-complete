@@ -5,25 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- <androidx.appcompat.widget.Toolbar
-         android:id="@+id/toolbar"
-         android:layout_width="0dp"
-         android:layout_height="?attr/actionBarSize"
-         android:background="@color/colorPrimary"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent">
-
-         <item
-             android:id="@+id/action_search"
-             android:icon="@android:drawable/ic_menu_search"
-             app:showAsAction="always|collapseActionView"
-             app:actionViewClass="androidx.appcompat.app.AppCompatActivity;"
-             android:title="Search"/>
-
-     </androidx.appcompat.widget.Toolbar>-->
-
-
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="0dp"

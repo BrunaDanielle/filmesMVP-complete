@@ -11,7 +11,7 @@ public class FilmeDetalhes {
     public String title;
 
     @SerializedName("Year")
-    public int year;
+    public String year;
 
     @SerializedName("Rated")
     public String rated;
@@ -53,7 +53,7 @@ public class FilmeDetalhes {
     public List<Ratings> ratings;
 
     @SerializedName("Metascore")
-    public int metascore;
+    public String metascore;
 
     @SerializedName("imdbRating")
     public Double imdbRating;
@@ -85,10 +85,10 @@ public class FilmeDetalhes {
     public FilmeDetalhes(){
     }
 
-    public FilmeDetalhes(String title, int year, String rated, String released, String runtime,
+    public FilmeDetalhes(String title, String year, String rated, String released, String runtime,
                          String genre, String director, String writer, String actors, String plot,
                          String language, String country, String awards, String poster, List<Ratings> ratings,
-                         int metascore, Double imdbRating, String imdbVotes, String imdbID, String type, String dVD,
+                         String metascore, Double imdbRating, String imdbVotes, String imdbID, String type, String dVD,
                          String boxOffice, String production, String website, boolean response) {
 
         this.title = title;

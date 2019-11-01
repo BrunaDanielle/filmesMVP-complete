@@ -127,6 +127,19 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         i.putExtra("Overview",filme.plot);
         i.putExtra("Poster",filme.poster);
         i.putExtra("Awards",filme.awards);
+        i.putExtra("Votes",filme.imdbVotes);
+
+        if(filme.boxOffice != null){
+            i.putExtra("BoxOffice",filme.boxOffice);
+        }
+
+        if(filme.ratings.size() == 1){
+            i.putExtra("Source",filme.ratings.get(0).source);
+            i.putExtra("Value",filme.ratings.get(0).value);
+        }else{
+            i.putExtra("Source",filme.ratings.get(1).source);
+            i.putExtra("Value",filme.ratings.get(1).value);
+        }
         getActivity().startActivity(i);
     }
 
@@ -173,7 +186,6 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                // Not implemented here
                 return false;
             default:
                 break;
@@ -181,7 +193,6 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
-
 
     private static class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.ViewHolder> {
 
@@ -243,8 +254,8 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
             public ViewHolder(View itemView, ItemListener listener) {
                 super(itemView);
                 mItemListener = listener;
-                titulo = (TextView) itemView.findViewById(R.id.filme_titulo);
-                thumbnail = (ImageView) itemView.findViewById(R.id.filme_thumb);
+                titulo = itemView.findViewById(R.id.filme_titulo);
+                thumbnail = itemView.findViewById(R.id.filme_thumb);
                 itemView.setOnClickListener(this);
             }
 
@@ -253,9 +264,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
                 int position = getAdapterPosition();
                 Filme filme = getItem(position);
                 mItemListener.onFilmeClick(filme);
-                Toast.makeText(v.getContext(),"click", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
     public interface ItemListener {

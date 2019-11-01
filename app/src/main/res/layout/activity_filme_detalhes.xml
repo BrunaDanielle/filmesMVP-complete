@@ -10,7 +10,56 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_title"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title"
         tools:context=".filmesmvp.filmes.FilmeDetalhesActivity">
+
+        <TextView
+            android:id="@+id/boxOffice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/votes2"
+            app:layout_constraintTop_toBottomOf="@+id/votes2" />
+
+        <TextView
+            android:id="@+id/votes2"
+            android:layout_width="79dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="35dp"
+            android:text=" Box Office"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/votes" />
+
+        <TextView
+            android:id="@+id/votes"
+            android:layout_width="45dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="44dp"
+            android:text=" Votes:"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/value" />
+
+        <TextView
+            android:id="@+id/votesImdb"
+            android:layout_width="208dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/votes"
+            app:layout_constraintTop_toBottomOf="@+id/value" />
 
         <ImageView
             android:id="@+id/filme_thumb"
@@ -18,18 +67,22 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/backdrop_guideline"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/gradient"
+            app:layout_constraintVertical_bias="1.0" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/movie_poster_card"
             android:layout_width="128dp"
             android:layout_height="172dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="#D7D9CE"
             app:layout_constraintBottom_toBottomOf="@+id/backdrop_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/backdrop_guideline">
@@ -55,7 +108,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +119,7 @@
             android:id="@+id/movie_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#757575"
+            android:textColor="@color/colorAccent"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/movie_title"
             app:layout_constraintTop_toBottomOf="@+id/movie_title" />
@@ -76,7 +129,7 @@
             android:layout_width="205dp"
             android:layout_height="34dp"
             android:inputType="textMultiLine"
-            android:textColor="#757575"
+            android:textColor="@color/colorAccent"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/movie_title"
             app:layout_constraintHorizontal_bias="0.0"
@@ -97,17 +150,21 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:textColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_poster_title_barrier" />
+
         <TextView
             android:id="@+id/actors"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="205dp"
+            android:layout_height="17dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
+            android:textColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.241"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_overview" />
 
@@ -117,9 +174,75 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:rating="0"
+            android:stepSize="0.5"
+            android:theme="@style/RatingBar"
             app:layout_constraintEnd_toEndOf="@+id/movie_poster_card"
             app:layout_constraintStart_toStartOf="@+id/movie_poster_card"
             app:layout_constraintTop_toBottomOf="@+id/movie_poster_card" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="32dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/actors"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/movie_overview"
+            app:layout_constraintTop_toBottomOf="@+id/movie_overview"
+            app:srcCompat="@drawable/ic_star_black_24dp"
+            tools:ignore="VectorDrawableCompat" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="19dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/actors"
+            app:srcCompat="@drawable/rotten_tomatoes" />
+
+        <TextView
+            android:id="@+id/source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="28dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/actors" />
+
+        <TextView
+            android:id="@+id/value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintStart_toStartOf="@+id/source"
+            app:layout_constraintTop_toBottomOf="@+id/source" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="32dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="19dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@drawable/popcorn" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="19dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:srcCompat="@drawable/box_office" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

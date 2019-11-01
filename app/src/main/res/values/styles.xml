@@ -3,11 +3,10 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">#8A8989</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -15,28 +14,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
+
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <!--   <style name="Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
-           <item name="android:textColorPrimary">@android:color/white</item>
-       </style>
-
-       <style name="Widget.CardContent" parent="android:Widget">
-           <item name="android:paddingLeft">16dp</item>
-           <item name="android:paddingRight">16dp</item>
-           <item name="android:paddingTop">24dp</item>
-           <item name="android:paddingBottom">24dp</item>
-           <item name="android:orientation">vertical</item>
-       </style>
-
-       <style name="MyTheme" parent="Theme.AppCompat.Light">
-           <item name="colorPrimary">@color/colorPrimary</item>
-           <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-           <item name="colorAccent">@color/colorAccent</item>
-           <item name="android:textColorPrimary">@color/colorWhite</item>
-           <item name="android:textColorPrimaryInverse">@color/colorBlack</item>
-       </style> -->
 
 </resources>
