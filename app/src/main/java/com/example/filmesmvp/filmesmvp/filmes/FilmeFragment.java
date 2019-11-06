@@ -75,7 +75,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
 
-        int numColumns = 1;
+        int numColumns = 2;
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
