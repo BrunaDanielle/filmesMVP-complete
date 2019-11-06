@@ -22,26 +22,17 @@ public class FilmesPresenter implements FilmesContract.UserActionsListener {
         mFilmesView.setCarregando(true);
 
         if(nomeFilme == null){
-            nomeFilme = "Star wars";
+            nomeFilme = "Hannibal";
         }
         mApi.getFilmePesquisa(nomeFilme, new FilmeServiceAPI.FilmeServiceCallBack<FilmeResultadoBusca>() {
             @Override
             public void onLoaded(FilmeResultadoBusca resultadoBusca) {
                 mFilmesView.setCarregando(false);
-                mFilmesView.exibirFilmes(resultadoBusca.filmes);
-            }
-        });
-    }
-
-    @Override
-    public void carregarFilmes() {
-        mFilmesView.setCarregando(true);
-
-        mApi.getFilmes(new FilmeServiceAPI.FilmeServiceCallBack<FilmeResultadoBusca>() {
-            @Override
-            public void onLoaded(FilmeResultadoBusca resultadoBusca) {
-                mFilmesView.setCarregando(false);
-                mFilmesView.exibirFilmes(resultadoBusca.filmes);
+                if(resultadoBusca.filmes == null){
+                    mFilmesView.mostraErro();
+                }else{
+                    mFilmesView.exibirFilmes(resultadoBusca.filmes);
+                }
             }
         });
     }

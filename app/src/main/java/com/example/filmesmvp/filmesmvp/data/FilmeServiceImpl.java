@@ -1,9 +1,18 @@
 package com.example.filmesmvp.filmesmvp.data;
 
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
+import com.example.filmesmvp.filmesmvp.filmes.FilmeFragment;
+import com.example.filmesmvp.filmesmvp.filmes.MainActivity;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,20 +25,6 @@ public class FilmeServiceImpl implements FilmeServiceAPI {
         mRetrofit = RetrofitClient.getClient().create(RetrofitEndpoint.class);
     }
 
-    @Override
-    public void getFilmes(final FilmeServiceCallBack<FilmeResultadoBusca> callBack) {
-        Call<FilmeResultadoBusca> callFilme = mRetrofit.busca("batman", "json");
-        callFilme.enqueue(new Callback<FilmeResultadoBusca>(){
-            public void onResponse(Call<FilmeResultadoBusca> call, Response<FilmeResultadoBusca> response){
-                if(response.code()==200){
-                    FilmeResultadoBusca resultadoBusca = response.body();
-                    callBack.onLoaded(resultadoBusca);
-                }
-            }
-            public void onFailure(Call<FilmeResultadoBusca> call, Throwable t){
-            }
-        });
-    }
     @Override
     public void getFilme(String filmeId, final FilmeServiceCallBack<FilmeDetalhes> callback) {
       Call<FilmeDetalhes> callFilme = mRetrofit.buscaDetalhes(filmeId, "json");
@@ -49,13 +44,17 @@ public class FilmeServiceImpl implements FilmeServiceAPI {
 
     @Override
     public void getFilmePesquisa(String nomeFilme, final FilmeServiceCallBack<FilmeResultadoBusca> callback) {
-        Call<FilmeResultadoBusca> callFilme = mRetrofit.busca(nomeFilme, "json");
+        Call<FilmeResultadoBusca> callFilme = mRetrofit.busca(nomeFilme.trim(), "json", "movie");
         callFilme.enqueue(new Callback<FilmeResultadoBusca>(){
             public void onResponse(Call<FilmeResultadoBusca> call, Response<FilmeResultadoBusca> response){
-                if(response.code()==200){
-                    FilmeResultadoBusca resultadoBusca = response.body();
-                    callback.onLoaded(resultadoBusca);
-                }
+                   try {
+                       if(response.code()==200){
+                           FilmeResultadoBusca resultadoBusca = response.body();
+                           callback.onLoaded(resultadoBusca);
+                       }
+                   }catch (Exception e){
+                       e.printStackTrace();
+                   }
             }
             public void onFailure(Call<FilmeResultadoBusca> call, Throwable t){
             }

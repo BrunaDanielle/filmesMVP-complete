@@ -12,11 +12,11 @@ public class FilmesContract {
         void setCarregando(boolean isAtivo);
         void exibirFilmes(List<Filme> filme);
         void exibirDetalhesUI (FilmeDetalhes filme);
+        void mostraErro();
     }
 
     interface UserActionsListener{
         void carregarFilmes(String nomeFilme);
-        void carregarFilmes();
         void abrirDetalhes(Filme filme);
     }
 }

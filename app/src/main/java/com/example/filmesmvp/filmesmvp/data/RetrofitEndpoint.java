@@ -9,7 +9,7 @@ import retrofit2.http.Query;
 
 public interface RetrofitEndpoint {
     @GET("./?&apikey=e5f3720f")
-    Call<FilmeResultadoBusca> busca(@Query("s") String q, @Query("r") String format);
+    Call<FilmeResultadoBusca> busca(@Query("s") String q, @Query("r") String format, @Query("type") String moviesOnly);
 
     @GET("./?apikey=e5f3720f")
     Call<FilmeDetalhes> buscaDetalhes(@Query("i") String q, @Query("r") String format);

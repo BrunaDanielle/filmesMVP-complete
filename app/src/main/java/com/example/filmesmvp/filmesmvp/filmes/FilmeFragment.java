@@ -89,7 +89,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mActionsListener.carregarFilmes();
+                mActionsListener.carregarFilmes("Hannibal");
             }
         });
 
@@ -141,6 +141,11 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
             i.putExtra("Value",filme.ratings.get(1).value);
         }
         getActivity().startActivity(i);
+    }
+
+    @Override
+    public void mostraErro() {
+        Toast.makeText(getActivity(), getString(R.string.movieError), Toast.LENGTH_LONG).show();
     }
 
     ItemListener mItemListener = new ItemListener(){

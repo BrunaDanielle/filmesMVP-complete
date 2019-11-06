@@ -24,8 +24,4 @@ public class Filme {
         this.ano = ano;
         this.posterUrl = posterUrl;
     }
-
-    public String toString(){
-        return "Titulo" + titulo;
-    }
 }
