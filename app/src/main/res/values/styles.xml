@@ -14,6 +14,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorPrimary</item>

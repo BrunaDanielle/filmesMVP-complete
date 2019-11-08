@@ -1,63 +1,122 @@
 package com.example.filmesmvp.filmesmvp.data;
 
 
-import android.content.Context;
+import android.os.Build;
+import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 import com.example.filmesmvp.filmesmvp.filmes.FilmeFragment;
+import com.example.filmesmvp.filmesmvp.filmes.FilmesPresenter;
 import com.example.filmesmvp.filmesmvp.filmes.MainActivity;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.logging.Handler;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
+
 //classe concreta (FilmeServiceImpl.java), que irá “assinar” o contrato proposto pela FilmeServiceAPI.
 
 public class FilmeServiceImpl implements FilmeServiceAPI {
-    RetrofitEndpoint mRetrofit;
+    //RetrofitEndpoint mRetrofit;
+    private final OkHttpClient client = new OkHttpClient();
+
+
+
 
     public FilmeServiceImpl(){
-        mRetrofit = RetrofitClient.getClient().create(RetrofitEndpoint.class);
+       // mRetrofit = RetrofitClient.getClient().create(RetrofitEndpoint.class);
     }
 
     @Override
     public void getFilme(String filmeId, final FilmeServiceCallBack<FilmeDetalhes> callback) {
-      Call<FilmeDetalhes> callFilme = mRetrofit.buscaDetalhes(filmeId, "json");
-        callFilme.enqueue(new Callback<FilmeDetalhes>() {
+        Request request = new Request.Builder()
+                .url("http://www.omdbapi.com/?i=" + filmeId + "&apikey=e5f3720f")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onResponse(Call<FilmeDetalhes> call, Response<FilmeDetalhes> response) {
-                if(response.code() ==200){
-                    FilmeDetalhes filme = response.body();
-                    callback.onLoaded(filme);
-                }
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onFailure(Call<FilmeDetalhes> call, Throwable t) {
-            } });
+            public void onResponse(Call call, Response response) {
+                try(ResponseBody responseBody = response.body()) {
+
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    Headers responseHeaders = response.headers();
+                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                    }
+                    if(response.code() == 200){
+                        Gson gson = new Gson();
+                        FilmeDetalhes entity = gson.fromJson(responseBody.string(), FilmeDetalhes.class);
+                        callback.onLoaded(entity);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
     public void getFilmePesquisa(String nomeFilme, final FilmeServiceCallBack<FilmeResultadoBusca> callback) {
-        Call<FilmeResultadoBusca> callFilme = mRetrofit.busca(nomeFilme.trim(), "json", "movie");
-        callFilme.enqueue(new Callback<FilmeResultadoBusca>(){
-            public void onResponse(Call<FilmeResultadoBusca> call, Response<FilmeResultadoBusca> response){
-                   try {
-                       if(response.code()==200){
-                           FilmeResultadoBusca resultadoBusca = response.body();
-                           callback.onLoaded(resultadoBusca);
-                       }
-                   }catch (Exception e){
-                       e.printStackTrace();
-                   }
-            }
-            public void onFailure(Call<FilmeResultadoBusca> call, Throwable t){
-            }
-        });
-    }
+
+            Request request = new Request.Builder()
+                    .url("http://www.omdbapi.com/?s=" + nomeFilme.trim() + "&apikey=e5f3720f")
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                   // e.printStackTrace();
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onResponse(Call call, Response response) {
+                    try(ResponseBody responseBody = response.body()) {
+
+                        if (!response.isSuccessful())
+                            throw new IOException("Unexpected code " + response);
+
+                        Headers responseHeaders = response.headers();
+                        for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                            System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                        }
+
+                        try {
+                        if(response.code() == 200) {
+                            Gson gson = new Gson();
+                            final FilmeResultadoBusca entity = gson.fromJson(responseBody.string(), FilmeResultadoBusca.class);
+                            callback.onLoaded(entity);
+                        }
+                        }catch (Exception e){
+                           e.printStackTrace();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
 }

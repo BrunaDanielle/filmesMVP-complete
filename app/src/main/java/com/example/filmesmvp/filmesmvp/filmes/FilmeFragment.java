@@ -113,8 +113,13 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
     }
 
     @Override
-    public void exibirFilmes(List<Filme> filme) {
-        mListAdapter.replaceData(filme);
+    public void exibirFilmes(final List<Filme> filme) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mListAdapter.replaceData(filme);
+            }
+        });
     }
 
     @Override
@@ -145,7 +150,12 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
     @Override
     public void mostraErro() {
-        Toast.makeText(getActivity(), getString(R.string.movieError), Toast.LENGTH_LONG).show();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), getString(R.string.movieError), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     ItemListener mItemListener = new ItemListener(){

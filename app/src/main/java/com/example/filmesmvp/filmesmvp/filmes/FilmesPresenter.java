@@ -7,6 +7,9 @@ import com.example.filmesmvp.filmesmvp.data.model.Filme;
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 
+import java.io.IOException;
+import java.util.logging.Handler;
+
 public class FilmesPresenter implements FilmesContract.UserActionsListener {
     private final FilmeServiceAPI mApi;
     private final FilmesContract.View mFilmesView;
@@ -17,7 +20,7 @@ public class FilmesPresenter implements FilmesContract.UserActionsListener {
         mFilmesView = filmesView;
     }
 
-    @Override
+        @Override
     public void carregarFilmes(String nomeFilme) {
         mFilmesView.setCarregando(true);
 
@@ -26,16 +29,17 @@ public class FilmesPresenter implements FilmesContract.UserActionsListener {
         }
         mApi.getFilmePesquisa(nomeFilme, new FilmeServiceAPI.FilmeServiceCallBack<FilmeResultadoBusca>() {
             @Override
-            public void onLoaded(FilmeResultadoBusca resultadoBusca) {
+            public void onLoaded(FilmeResultadoBusca resultadoBusca){
                 mFilmesView.setCarregando(false);
                 if(resultadoBusca.filmes == null){
                     mFilmesView.mostraErro();
-                }else{
+                }else {
                     mFilmesView.exibirFilmes(resultadoBusca.filmes);
                 }
             }
         });
     }
+
 
     @Override
     public void abrirDetalhes(Filme filme) {

@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/icone_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".filmesmvp.filmes.FilmeDetalhesActivity"></activity>
+        <activity android:name=".filmesmvp.filmes.FilmeDetalhesActivity"
+            android:theme = "@style/AppTheme2"></activity>
         <activity android:name=".filmesmvp.filmes.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,5 +1,8 @@
 package com.example.filmesmvp.filmesmvp.filmes;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -7,10 +10,12 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.filmesmvp.R;
 import com.squareup.picasso.Picasso;
@@ -29,6 +34,7 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
     private TextView boxOffice;
     private TextView votes;
     private RatingBar rating;
+    private ActionBar ab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,11 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         releaseDate = findViewById(R.id.movie_release_date);
         overview = findViewById(R.id.movie_overview);
 
+        ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeButtonEnabled(true);
+        //ab.setTitle(findViewById(R.id.filme_titulo).toString());
+
         Intent i = getIntent();
         Bundle extras = i.getExtras();
 
@@ -56,6 +67,15 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void populateDetails(Bundle extras) {
@@ -72,7 +92,10 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
 
         releaseDate.setText(extras.getString("DateRelease"));
         overview.setText(extras.getString("Overview"));
+
         title.setText(extras.getString("Title"));
+        ab.setTitle(extras.getString("Title"));
+
         awards.setText(extras.getString("Awards"));
         source.setText(extras.getString("Source"));
         value.setText(extras.getString("Value"));
