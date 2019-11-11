@@ -7,9 +7,6 @@ import com.example.filmesmvp.filmesmvp.data.model.Filme;
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 
-import java.io.IOException;
-import java.util.logging.Handler;
-
 public class FilmesPresenter implements FilmesContract.UserActionsListener {
     private final FilmeServiceAPI mApi;
     private final FilmesContract.View mFilmesView;

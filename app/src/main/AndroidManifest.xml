@@ -11,9 +11,13 @@
         android:roundIcon="@drawable/icone_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".filmesmvp.filmes.FilmeDetalhesActivity"
-            android:theme = "@style/AppTheme2"></activity>
-        <activity android:name=".filmesmvp.filmes.MainActivity">
+        <activity android:name=".filmesmvp.Register.ResetPasswordActivity"></activity>
+        <activity android:name=".filmesmvp.Register.LoginActivity" />
+        <activity android:name=".filmesmvp.filmes.MainActivity" />
+        <activity
+            android:name=".filmesmvp.filmes.FilmeDetalhesActivity"
+            android:theme="@style/AppTheme2" />
+        <activity android:name=".filmesmvp.Register.SignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,0 +1,5 @@
+<root>
+    <item name='android.os.Parcelable'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>

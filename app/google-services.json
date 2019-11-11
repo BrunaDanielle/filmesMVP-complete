@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "739121580186",
+    "firebase_url": "https://movies-a3737.firebaseio.com",
+    "project_id": "movies-a3737",
+    "storage_bucket": "movies-a3737.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739121580186:android:a106166caddcfc317b7723",
+        "android_client_info": {
+          "package_name": "com.example.filmesmvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739121580186-gj64v9116jktm034ggapekb7b3ug9pvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbSi4c6S30lxfmqHeqq5ptuClKKTxaAAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739121580186-gj64v9116jktm034ggapekb7b3ug9pvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739121580186:android:c95ab8c9957485b67b7723",
+        "android_client_info": {
+          "package_name": "como.example.filmesmvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739121580186-gj64v9116jktm034ggapekb7b3ug9pvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbSi4c6S30lxfmqHeqq5ptuClKKTxaAAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739121580186-gj64v9116jktm034ggapekb7b3ug9pvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

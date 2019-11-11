@@ -2,22 +2,12 @@ package com.example.filmesmvp.filmesmvp.data;
 
 
 import android.os.Build;
-import android.os.Looper;
-import android.util.Log;
-
 import androidx.annotation.RequiresApi;
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
-import com.example.filmesmvp.filmesmvp.filmes.FilmeFragment;
-import com.example.filmesmvp.filmesmvp.filmes.FilmesPresenter;
-import com.example.filmesmvp.filmesmvp.filmes.MainActivity;
 import com.google.gson.Gson;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
-import java.util.logging.Handler;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -25,8 +15,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-
-import static android.content.ContentValues.TAG;
 
 //classe concreta (FilmeServiceImpl.java), que irá “assinar” o contrato proposto pela FilmeServiceAPI.
 
