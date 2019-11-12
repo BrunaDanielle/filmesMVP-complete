@@ -1,4 +1,4 @@
-package com.example.filmesmvp.filmesmvp.Register;
+package com.example.filmesmvp.filmesmvp.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
