@@ -3,6 +3,7 @@ package com.example.filmesmvp.filmesmvp.filmes;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,10 +31,18 @@ import com.example.filmesmvp.R;
 import com.example.filmesmvp.filmesmvp.data.FilmeServiceImpl;
 import com.example.filmesmvp.filmesmvp.data.model.Filme;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
+import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 
 //exibe a lista de filmes com recycler view e cardview
 

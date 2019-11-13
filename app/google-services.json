@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "739121580186-f47t0ee7r20e54kmk44tjgfl32lhtard.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.filmesmvp",
+            "certificate_hash": "19d362944e999a068edd0937876cb9090de0b175"
+          }
+        },
+        {
           "client_id": "739121580186-gj64v9116jktm034ggapekb7b3ug9pvj.apps.googleusercontent.com",
           "client_type": 3
         }

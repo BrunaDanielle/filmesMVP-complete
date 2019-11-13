@@ -1,12 +1,12 @@
 package com.example.filmesmvp.filmesmvp.filmes;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -15,9 +15,13 @@ import android.widget.ImageView;
 
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.Toast;
 
 import com.example.filmesmvp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.picasso.Picasso;
 
 public class FilmeDetalhesActivity extends AppCompatActivity {
@@ -35,6 +39,8 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
     private TextView votes;
     private RatingBar rating;
     private ActionBar ab;
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +63,47 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
-        //ab.setTitle(findViewById(R.id.filme_titulo).toString());
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(3600)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
 
         Intent i = getIntent();
         Bundle extras = i.getExtras();
 
         if(extras!= null){
             populateDetails(extras);
+            fetchColor();
         } else {
             finish();
         }
+
+    }
+    private void fetchColor() {
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(FilmeDetalhesActivity.this, "Fetch and activate succeeded",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(FilmeDetalhesActivity.this, "Fetch failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        displayColor();
+                    }
+                });
+    }
+
+    private void displayColor(){
+        String fontColor = mFirebaseRemoteConfig.getString("font_color");
+        overview.setTextColor(Color.parseColor(fontColor));
     }
 
     @Override
