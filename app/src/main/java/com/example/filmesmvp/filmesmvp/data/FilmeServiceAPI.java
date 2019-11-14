@@ -11,8 +11,6 @@ public interface FilmeServiceAPI {
         void onLoaded(T filmes);
     }
 
-    //void getFilmes(FilmeServiceCallBack<FilmeResultadoBusca> callBack);
-
     void getFilme(String filmeId, FilmeServiceCallBack<FilmeDetalhes> callback);
 
     void getFilmePesquisa(String nomeFilme, FilmeServiceCallBack<FilmeResultadoBusca> callback);
