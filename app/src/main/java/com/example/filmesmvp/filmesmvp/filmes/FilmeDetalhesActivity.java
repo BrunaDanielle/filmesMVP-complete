@@ -47,18 +47,7 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filme_detalhes);
 
-        backdrop = findViewById(R.id.filme_thumb);
-        poster = findViewById(R.id.movie_poster);
-        title = findViewById(R.id.movie_title);
-        nameActors = findViewById(R.id.actors);
-        awards = findViewById(R.id.awards);
-        source = findViewById(R.id.source);
-        value = findViewById(R.id.value);
-        votes = findViewById(R.id.votesImdb);
-        boxOffice = findViewById(R.id.boxOffice);
-        rating = findViewById(R.id.movie_rating);
-        releaseDate = findViewById(R.id.movie_release_date);
-        overview = findViewById(R.id.movie_overview);
+        initView();
 
         ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -83,6 +72,21 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    private void initView(){
+        backdrop = findViewById(R.id.filme_thumb);
+        poster = findViewById(R.id.movie_poster);
+        title = findViewById(R.id.movie_title);
+        nameActors = findViewById(R.id.actors);
+        awards = findViewById(R.id.awards);
+        source = findViewById(R.id.source);
+        value = findViewById(R.id.value);
+        votes = findViewById(R.id.votesImdb);
+        boxOffice = findViewById(R.id.boxOffice);
+        rating = findViewById(R.id.movie_rating);
+        releaseDate = findViewById(R.id.movie_release_date);
+        overview = findViewById(R.id.movie_overview);
     }
     private void fetchColor() {
         mFirebaseRemoteConfig.fetchAndActivate()

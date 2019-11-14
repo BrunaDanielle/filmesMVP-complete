@@ -19,14 +19,9 @@ import okhttp3.ResponseBody;
 //classe concreta (FilmeServiceImpl.java), que irá “assinar” o contrato proposto pela FilmeServiceAPI.
 
 public class FilmeServiceImpl implements FilmeServiceAPI {
-    //RetrofitEndpoint mRetrofit;
     private final OkHttpClient client = new OkHttpClient();
 
-
-
-
     public FilmeServiceImpl(){
-       // mRetrofit = RetrofitClient.getClient().create(RetrofitEndpoint.class);
     }
 
     @Override
@@ -76,7 +71,6 @@ public class FilmeServiceImpl implements FilmeServiceAPI {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                   // e.printStackTrace();
                 }
 
                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)

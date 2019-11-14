@@ -3,7 +3,6 @@ package com.example.filmesmvp.filmesmvp.filmes;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,21 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.filmesmvp.R;
+import com.example.filmesmvp.filmesmvp.adapter.FilmesAdapter;
+import com.example.filmesmvp.filmesmvp.adapter.ItemListener;
 import com.example.filmesmvp.filmesmvp.data.FilmeServiceImpl;
 import com.example.filmesmvp.filmesmvp.data.model.Filme;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
-import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 
 //exibe a lista de filmes com recycler view e cardview
 
@@ -54,35 +43,35 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
     private SearchView.OnQueryTextListener queryTextListener;
     private String querySearch;
 
-    public FilmeFragment(){
+    public FilmeFragment() {
     }
 
-    public static FilmeFragment newInstance(){
-        return  new FilmeFragment();
+    public static FilmeFragment newInstance() {
+        return new FilmeFragment();
     }
 
-    public void onCreate(@Nullable Bundle savedInstanceState){
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new FilmesAdapter(new ArrayList<Filme>(0), mItemListener);
-        mActionsListener = new FilmesPresenter(new FilmeServiceImpl(),this);
+        mActionsListener = new FilmesPresenter(new FilmeServiceImpl(), this);
         setHasOptionsMenu(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-         mActionsListener.carregarFilmes(querySearch);
+        mActionsListener.carregarFilmes(querySearch);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View root = inflater.inflate(R.layout.fragment_filme, container, false);
+        View root = inflater.inflate(R.layout.fragment_filme, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.filmes_list);
         Toolbar mToolbar = root.findViewById(R.id.toolbar);
         recyclerView.setAdapter(mListAdapter);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
         int numColumns = 2;
 
@@ -107,7 +96,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
     @Override
     public void setCarregando(final boolean isAtivo) {
-        if(getView() ==  null){
+        if (getView() == null) {
             return;
         }
 
@@ -136,23 +125,23 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         Intent i = new Intent(getActivity().getBaseContext(), FilmeDetalhesActivity.class);
         i.putExtra("Actors", filme.actors);
         i.putExtra("Title", filme.title);
-        i.putExtra("Ratings",filme.imdbRating);
-        i.putExtra("DateRelease",filme.released);
-        i.putExtra("Overview",filme.plot);
-        i.putExtra("Poster",filme.poster);
-        i.putExtra("Awards",filme.awards);
-        i.putExtra("Votes",filme.imdbVotes);
+        i.putExtra("Ratings", filme.imdbRating);
+        i.putExtra("DateRelease", filme.released);
+        i.putExtra("Overview", filme.plot);
+        i.putExtra("Poster", filme.poster);
+        i.putExtra("Awards", filme.awards);
+        i.putExtra("Votes", filme.imdbVotes);
 
-        if(filme.boxOffice != null){
-            i.putExtra("BoxOffice",filme.boxOffice);
+        if (filme.boxOffice != null) {
+            i.putExtra("BoxOffice", filme.boxOffice);
         }
 
-        if(filme.ratings.size() == 1){
-            i.putExtra("Source",filme.ratings.get(0).source);
-            i.putExtra("Value",filme.ratings.get(0).value);
-        }else{
-            i.putExtra("Source",filme.ratings.get(1).source);
-            i.putExtra("Value",filme.ratings.get(1).value);
+        if (filme.ratings.size() == 1) {
+            i.putExtra("Source", filme.ratings.get(0).source);
+            i.putExtra("Value", filme.ratings.get(0).value);
+        } else {
+            i.putExtra("Source", filme.ratings.get(1).source);
+            i.putExtra("Value", filme.ratings.get(1).value);
         }
         getActivity().startActivity(i);
     }
@@ -167,7 +156,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         });
     }
 
-    ItemListener mItemListener = new ItemListener(){
+    ItemListener mItemListener = new ItemListener() {
         @Override
         public void onFilmeClick(Filme filme) {
             mActionsListener.abrirDetalhes(filme);
@@ -193,6 +182,7 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
                     return true;
                 }
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.i("onQueryTextSubmit", query);
@@ -216,82 +206,5 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
-    }
-
-    private static class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.ViewHolder> {
-
-        private List<Filme> mFilmes;
-        private ItemListener mItemListener;
-
-        public FilmesAdapter(List<Filme> filmes, ItemListener itemListener){
-            setList(filmes);
-            mItemListener = itemListener;
-        }
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View noteView = inflater.inflate(R.layout.filme_item, parent, false);
-
-            return new ViewHolder(noteView, mItemListener);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Filme filme = mFilmes.get(position);
-
-            Picasso.with(holder.thumbnail.getContext())
-                    .load(filme.posterUrl)
-                    .fit().centerCrop()
-                    .placeholder(R.drawable.ic_insert_photo_black_48px)
-                    .into(holder.thumbnail);
-
-            holder.titulo.setText(filme.titulo);
-        }
-
-        public void replaceData(List<Filme> notes) {
-            setList(notes);
-            notifyDataSetChanged();
-        }
-
-        private void setList(List<Filme> notes) {
-            mFilmes = notes;
-        }
-
-        @Override
-        public int getItemCount() {
-                return mFilmes.size();
-        }
-
-        public Filme getItem(int position) {
-            return mFilmes.get(position);
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-            public ImageView thumbnail;
-            public TextView titulo;
-            private ItemListener mItemListener;
-
-            public ViewHolder(View itemView, ItemListener listener) {
-                super(itemView);
-                mItemListener = listener;
-                titulo = itemView.findViewById(R.id.filme_titulo);
-                thumbnail = itemView.findViewById(R.id.filme_thumb);
-                itemView.setOnClickListener(this);
-            }
-
-            @Override
-            public void onClick(View v) {
-                int position = getAdapterPosition();
-                Filme filme = getItem(position);
-                mItemListener.onFilmeClick(filme);
-            }
-        }
-    }
-    public interface ItemListener {
-        void onFilmeClick(Filme clickedNote);
     }
 }
