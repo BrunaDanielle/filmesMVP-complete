@@ -35,11 +35,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-//exibe a lista de filmes com recycler view e cardview
+/**
+ * Exibe a lista de filmes com recycler view e cardview
+ */
 
 public class FilmeFragment extends Fragment implements FilmesContract.View {
     private FilmesContract.UserActionsListener mActionsListener;
-
     private FilmesAdapter mListAdapter;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
