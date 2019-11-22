@@ -50,12 +50,15 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         initView();
 
         ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeButtonEnabled(true);
+        if(ab != null){
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeButtonEnabled(true);
+        }
 
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setMinimumFetchIntervalInSeconds(3600)
                 .build();
         mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
@@ -65,16 +68,15 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         Intent i = getIntent();
         Bundle extras = i.getExtras();
 
-        if(extras!= null){
+        if (extras != null) {
             populateDetails(extras);
             fetchColor();
         } else {
             finish();
         }
-
     }
 
-    private void initView(){
+    private void initView() {
         backdrop = findViewById(R.id.filme_thumb);
         poster = findViewById(R.id.movie_poster);
         title = findViewById(R.id.movie_title);
@@ -88,33 +90,31 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         releaseDate = findViewById(R.id.movie_release_date);
         overview = findViewById(R.id.movie_overview);
     }
+
     private void fetchColor() {
         mFirebaseRemoteConfig.fetchAndActivate()
-                .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Boolean> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(FilmeDetalhesActivity.this, "Fetch and activate succeeded",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(FilmeDetalhesActivity.this, "Fetch failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        displayColor();
+                .addOnCompleteListener(this, (task) -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(FilmeDetalhesActivity.this, "Fetch and activate succeeded",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(FilmeDetalhesActivity.this, "Fetch failed",
+                                Toast.LENGTH_SHORT).show();
                     }
+                    displayColor();
                 });
     }
 
-    private void displayColor(){
+    private void displayColor() {
         String fontColor = mFirebaseRemoteConfig.getString("font_color");
         overview.setTextColor(Color.parseColor(fontColor));
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
-            onBackPressed();
+                onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -142,13 +142,13 @@ public class FilmeDetalhesActivity extends AppCompatActivity {
         value.setText(extras.getString("Value"));
         votes.setText(extras.getString("Votes"));
         String bOffice = extras.getString("BoxOffice");
-        if(bOffice != null){
+        if (bOffice != null) {
             boxOffice.setText(bOffice);
-        }else{
+        } else {
             boxOffice.setText("N/A");
         }
         nameActors.setText(extras.getString("Actors"));
-        rating.setRating((float) extras.getDouble("Ratings")/2);
+        rating.setRating((float) extras.getDouble("Ratings") / 2);
 
         LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);

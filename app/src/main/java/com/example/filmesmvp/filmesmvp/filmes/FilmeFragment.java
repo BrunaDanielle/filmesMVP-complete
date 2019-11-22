@@ -30,6 +30,7 @@ import com.example.filmesmvp.filmesmvp.adapter.ItemListener;
 import com.example.filmesmvp.filmesmvp.data.FilmeServiceImpl;
 import com.example.filmesmvp.filmesmvp.data.model.Filme;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,9 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
         Toolbar mToolbar = root.findViewById(R.id.toolbar);
         recyclerView.setAdapter(mListAdapter);
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        }
 
         int numColumns = 2;
 
@@ -84,13 +87,9 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
                 ContextCompat.getColor(getActivity(), R.color.colorAccent),
                 ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mActionsListener.carregarFilmes("Hannibal");
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            mActionsListener.carregarFilmes("Hannibal");
         });
-
         return root;
     }
 
@@ -102,22 +101,16 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
         final SwipeRefreshLayout srl = getView().findViewById(R.id.refresh_layout);
 
-        srl.post(new Runnable() {
-            @Override
-            public void run() {
-                srl.setRefreshing(isAtivo);
-            }
-        });
+        srl.post(() -> srl.setRefreshing(isAtivo));
     }
 
     @Override
     public void exibirFilmes(final List<Filme> filme) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(() -> {
                 mListAdapter.replaceData(filme);
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -148,15 +141,14 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
 
     @Override
     public void mostraErro() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        if(getActivity() != null){
+            getActivity().runOnUiThread(() -> {
                 Toast.makeText(getActivity(), getString(R.string.movieError), Toast.LENGTH_LONG).show();
-            }
-        });
+            });
+        }
     }
 
-    ItemListener mItemListener = new ItemListener() {
+    private ItemListener mItemListener = new ItemListener() {
         @Override
         public void onFilmeClick(Filme filme) {
             mActionsListener.abrirDetalhes(filme);
@@ -164,36 +156,39 @@ public class FilmeFragment extends Fragment implements FilmesContract.View {
     };
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
+        if(getActivity() != null) {
+            SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+            if (searchItem != null) {
+                searchView = (SearchView) searchItem.getActionView();
+            }
+            if (searchView != null && searchManager != null) {
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+                queryTextListener = new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        Log.i("onQueryTextChange", newText);
+
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        Log.i("onQueryTextSubmit", query);
+                        querySearch = query;
+                        mActionsListener.carregarFilmes(query);
+                        return true;
+                    }
+                };
+                searchView.setOnQueryTextListener(queryTextListener);
+            }
+            super.onCreateOptionsMenu(menu, inflater);
         }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-            queryTextListener = new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    Log.i("onQueryTextChange", newText);
-
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Log.i("onQueryTextSubmit", query);
-                    querySearch = query;
-                    mActionsListener.carregarFilmes(query);
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

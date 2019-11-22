@@ -4,8 +4,6 @@ package com.example.filmesmvp.filmesmvp.data;
 import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
 import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 
-import java.io.IOException;
-
 public interface FilmeServiceAPI {
 
     interface FilmeServiceCallBack<T>{

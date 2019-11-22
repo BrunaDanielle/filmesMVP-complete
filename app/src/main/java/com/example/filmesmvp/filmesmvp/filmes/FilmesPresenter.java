@@ -4,47 +4,36 @@ package com.example.filmesmvp.filmesmvp.filmes;
 
 import com.example.filmesmvp.filmesmvp.data.FilmeServiceAPI;
 import com.example.filmesmvp.filmesmvp.data.model.Filme;
-import com.example.filmesmvp.filmesmvp.data.model.FilmeResultadoBusca;
-import com.example.filmesmvp.filmesmvp.filmeDetalhes.model.FilmeDetalhes;
 
 public class FilmesPresenter implements FilmesContract.UserActionsListener {
     private final FilmeServiceAPI mApi;
     private final FilmesContract.View mFilmesView;
 
 
-    public FilmesPresenter(FilmeServiceAPI api, FilmesContract.View filmesView){
+    public FilmesPresenter(FilmeServiceAPI api, FilmesContract.View filmesView) {
         mApi = api;
         mFilmesView = filmesView;
     }
 
-        @Override
+    @Override
     public void carregarFilmes(String nomeFilme) {
         mFilmesView.setCarregando(true);
 
-        if(nomeFilme == null){
+        if (nomeFilme == null) {
             nomeFilme = "Hannibal";
         }
-        mApi.getFilmePesquisa(nomeFilme, new FilmeServiceAPI.FilmeServiceCallBack<FilmeResultadoBusca>() {
-            @Override
-            public void onLoaded(FilmeResultadoBusca resultadoBusca){
-                mFilmesView.setCarregando(false);
-                if(resultadoBusca.filmes == null){
-                    mFilmesView.mostraErro();
-                }else {
-                    mFilmesView.exibirFilmes(resultadoBusca.filmes);
-                }
+        mApi.getFilmePesquisa(nomeFilme, (resultadoBusca) -> {
+            mFilmesView.setCarregando(false);
+            if (resultadoBusca.filmes == null) {
+                mFilmesView.mostraErro();
+            } else {
+                mFilmesView.exibirFilmes(resultadoBusca.filmes);
             }
         });
     }
 
-
     @Override
     public void abrirDetalhes(Filme filme) {
-        mApi.getFilme(filme.id, new FilmeServiceAPI.FilmeServiceCallBack<FilmeDetalhes>(){
-            @Override
-            public void onLoaded(FilmeDetalhes filme) {
-                mFilmesView.exibirDetalhesUI(filme);
-            }
-        });
+        mApi.getFilme(filme.id, mFilmesView::exibirDetalhesUI);
     }
 }
